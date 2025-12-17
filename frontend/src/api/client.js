@@ -1,8 +1,17 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const TOKEN_KEY = 'documind_token';
+
+// Token management
+export const tokenManager = {
+  getToken: () => localStorage.getItem(TOKEN_KEY),
+  setToken: (token) => localStorage.setItem(TOKEN_KEY, token),
+  clearToken: () => localStorage.removeItem(TOKEN_KEY),
+};
 
 async function request(endpoint, options = {}) {
   const url = `${API_URL}${endpoint}`;
-  
+  const token = tokenManager.getToken();
+
   const config = {
     ...options,
     credentials: 'include',
@@ -11,13 +20,18 @@ async function request(endpoint, options = {}) {
     },
   };
 
+  // Add Authorization header if token exists
+  if (token) {
+    config.headers['Authorization'] = `Bearer ${token}`;
+  }
+
   // Don't set Content-Type for FormData (browser will set it with boundary)
   if (!(options.body instanceof FormData)) {
     config.headers['Content-Type'] = 'application/json';
   }
 
   const response = await fetch(url, config);
-  
+
   if (!response.ok) {
     const error = await response.json().catch(() => ({ error: 'Request failed' }));
     throw new Error(error.error || 'Request failed');

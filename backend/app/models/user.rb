@@ -3,6 +3,17 @@ class User < ApplicationRecord
 
   has_many :documents, dependent: :destroy
 
+  # Generate a new session token
+  def regenerate_session_token!
+    update!(session_token: SecureRandom.urlsafe_base64(32))
+    session_token
+  end
+
+  # Clear the session token (logout)
+  def clear_session_token!
+    update!(session_token: nil)
+  end
+
   validates :email, presence: true,
                     uniqueness: { case_sensitive: false },
                     format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -34,12 +45,14 @@ class User < ApplicationRecord
     )
   end
 
-  def as_json_public
-    {
+  def as_json_public(include_token: false)
+    data = {
       id: id,
       email: email,
       name: name
     }
+    data[:token] = session_token if include_token && session_token.present?
+    data
   end
 
   private

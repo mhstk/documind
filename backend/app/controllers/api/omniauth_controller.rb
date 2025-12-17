@@ -12,8 +12,9 @@ class Api::OmniauthController < Api::BaseController
 
     user = User.find_or_create_from_google(auth)
     session[:user_id] = user.id
+    token = user.regenerate_session_token!
 
-    redirect_to_frontend(success: true)
+    redirect_to_frontend(token: token)
   rescue StandardError => e
     Rails.logger.error "OAuth error: #{e.message}"
     redirect_to_frontend(error: "oauth_failed")
@@ -26,6 +27,8 @@ class Api::OmniauthController < Api::BaseController
 
     if params[:error]
       redirect_to "#{frontend_url}/login?error=#{params[:error]}", allow_other_host: true
+    elsif params[:token]
+      redirect_to "#{frontend_url}/auth/callback?token=#{params[:token]}", allow_other_host: true
     else
       redirect_to "#{frontend_url}/documents", allow_other_host: true
     end

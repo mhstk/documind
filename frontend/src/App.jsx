@@ -7,6 +7,7 @@ import DocumentPage from '@/pages/DocumentPage';
 import SearchPage from '@/pages/SearchPage';
 import LoginPage from '@/pages/LoginPage';
 import SignupPage from '@/pages/SignupPage';
+import AuthCallbackPage from '@/pages/AuthCallbackPage';
 import { Toaster } from '@/components/ui/sonner';
 
 const pageVariants = {
@@ -44,6 +45,7 @@ function AnimatedRoutes() {
         {/* Public routes */}
         <Route path="/login" element={<AnimatedPage><LoginPage /></AnimatedPage>} />
         <Route path="/signup" element={<AnimatedPage><SignupPage /></AnimatedPage>} />
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
 
         {/* Protected routes */}
         <Route path="/" element={<Navigate to="/documents" replace />} />

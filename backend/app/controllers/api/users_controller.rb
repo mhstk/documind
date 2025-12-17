@@ -7,7 +7,8 @@ class Api::UsersController < Api::BaseController
 
     if user.save
       session[:user_id] = user.id
-      render json: { user: user.as_json_public }, status: :created
+      user.regenerate_session_token!
+      render json: { user: user.as_json_public(include_token: true) }, status: :created
     else
       render_error(user.errors.full_messages.join(", "))
     end

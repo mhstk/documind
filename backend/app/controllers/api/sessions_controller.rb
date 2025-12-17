@@ -7,7 +7,8 @@ class Api::SessionsController < Api::BaseController
 
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      render json: { user: user.as_json_public }
+      user.regenerate_session_token!
+      render json: { user: user.as_json_public(include_token: true) }
     else
       render_error("Invalid email or password", :unauthorized)
     end
@@ -15,6 +16,7 @@ class Api::SessionsController < Api::BaseController
 
   # DELETE /api/logout
   def destroy
+    current_user&.clear_session_token!
     session.delete(:user_id)
     render json: { success: true }
   end
