@@ -1,0 +1,33 @@
+source "https://rubygems.org"
+
+gem "rails", "~> 8.1.1"
+gem "pg", "~> 1.1"
+gem "puma", ">= 5.0"
+
+# Windows timezone data
+gem "tzinfo-data", platforms: %i[ windows jruby ]
+
+# Reduces boot times through caching
+gem "bootsnap", require: false
+
+# CORS for API
+gem "rack-cors"
+
+# PDF parsing
+gem "pdf-reader"
+
+# HTTP client for OpenRouter
+gem "faraday"
+
+# Authentication
+gem "bcrypt", "~> 3.1.7"
+gem "omniauth", "~> 2.1"
+gem "omniauth-google-oauth2", "~> 1.1"
+gem "omniauth-rails_csrf_protection", "~> 1.0"
+
+# Environment variables
+gem "dotenv-rails", groups: [:development, :test]
+
+group :development, :test do
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+end

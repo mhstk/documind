@@ -1,0 +1,203 @@
+@import "tailwindcss";
+
+/* shadcn/ui CSS Variables */
+:root {
+  /* Original palette */
+  --shadow-grey: #32292f;
+  --pearl-aqua: #99e1d9;
+  --mint-cream: #f0f7f4;
+  --tropical-teal: #70abaf;
+  --taupe-grey: #705d56;
+
+  /* shadcn/ui design tokens (HSL format) */
+  --background: 340 17% 18%;
+  --foreground: 150 47% 95%;
+  --card: 340 17% 18%;
+  --card-foreground: 150 47% 95%;
+  --popover: 340 17% 15%;
+  --popover-foreground: 150 47% 95%;
+  --primary: 174 58% 75%;
+  --primary-foreground: 340 17% 18%;
+  --secondary: 183 26% 56%;
+  --secondary-foreground: 150 47% 95%;
+  --muted: 17 15% 39%;
+  --muted-foreground: 150 30% 70%;
+  --accent: 174 58% 75%;
+  --accent-foreground: 340 17% 18%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 150 47% 95%;
+  --border: 150 10% 20%;
+  --input: 150 10% 20%;
+  --ring: 174 58% 75%;
+  --radius: 0.75rem;
+
+  /* Gradient variables */
+  --gradient-primary: linear-gradient(135deg, var(--pearl-aqua) 0%, var(--tropical-teal) 50%, var(--taupe-grey) 100%);
+  --gradient-bg: linear-gradient(135deg, #32292f 0%, #3d3438 50%, #32292f 100%);
+  --glass-bg: rgba(240, 247, 244, 0.05);
+  --glass-border: rgba(240, 247, 244, 0.1);
+}
+
+/* Base Styles */
+body {
+  background: var(--gradient-bg);
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+  min-height: 100vh;
+  color: var(--mint-cream);
+}
+
+/* Glassmorphism */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: var(--gradient-primary);
+  background-size: 200% 200%;
+  animation: gradient 5s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient Border */
+.gradient-border {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-primary);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Glow Effects */
+.glow {
+  box-shadow: 0 0 20px rgba(153, 225, 217, 0.3);
+}
+
+.glow-strong {
+  box-shadow: 0 0 40px rgba(153, 225, 217, 0.4), 0 0 80px rgba(112, 171, 175, 0.2);
+}
+
+/* Shimmer Animation for Skeletons */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Hover Card Effect */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(153, 225, 217, 0.2);
+}
+
+/* Button Styles */
+.btn-primary {
+  background: var(--gradient-primary);
+  background-size: 200% 200%;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  animation: gradient 3s ease infinite;
+  box-shadow: 0 0 20px rgba(153, 225, 217, 0.5);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+}
+
+/* Upload Zone Pulse */
+.upload-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Progress Ring */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring__circle {
+  transition: stroke-dashoffset 0.35s;
+  transform-origin: 50% 50%;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Selection */
+::selection {
+  background: rgba(153, 225, 217, 0.3);
+  color: #fff;
+}
+
+/* Focus Styles */
+*:focus-visible {
+  outline: 2px solid #99e1d9;
+  outline-offset: 2px;
+}
+
+/* Keyframes */
+@keyframes gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
