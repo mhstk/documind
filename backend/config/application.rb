@@ -45,7 +45,7 @@ module Backend
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore,
       key: "_documind_session",
-      same_site: :lax,
+      same_site: Rails.env.production? ? :none : :lax,
       secure: Rails.env.production?
 
     # Autoload services directory
